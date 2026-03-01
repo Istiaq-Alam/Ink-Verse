@@ -1,9 +1,28 @@
+/* 1. Unified Theme Variables */
 :root {
-    --bg-color: #fdf5e6; /* Old Paper color */
-    --accent-color: #800000; /* Deep Maroon */
+    --bg-color: #f4f1ea;       /* Light Old Paper */
+    --header-bg: rgba(255, 250, 240, 0.8);
+    --card-bg: rgba(255, 255, 255, 0.85);
+    --accent-color: #800000;   /* Deep Maroon */
     --text-color: #2c2c2c;
+    --modal-bg: #fffdf9;
+    --border-color: #dcd7c9;
+    --shadow: rgba(0, 0, 0, 0.05);
 }
 
+/* 2. Dark Mode Variables */
+[data-theme="dark"] {
+    --bg-color: #1a1a1a;       /* Dark Charcoal */
+    --header-bg: rgba(34, 34, 34, 0.9);
+    --card-bg: #262626;
+    --accent-color: #e0a38d;   /* Soft Copper for better dark reading */
+    --text-color: #e0e0e0;
+    --modal-bg: #1e1e1e;
+    --border-color: #444;
+    --shadow: rgba(0, 0, 0, 0.4);
+}
+
+/* 3. General Reset & Base Styles */
 * {
     margin: 0;
     padding: 0;
@@ -15,12 +34,33 @@ body {
     background-color: var(--bg-color);
     color: var(--text-color);
     line-height: 1.8;
+    overflow-x: hidden;
+    transition: background-color 0.4s ease, color 0.4s ease;
 }
 
+/* Paper Texture Overlay */
+.paper-texture {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background-image: url('https://www.transparenttextures.com/patterns/handmade-paper.png');
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.3;
+}
+
+[data-theme="dark"] .paper-texture {
+    filter: invert(1);
+    opacity: 0.05;
+}
+
+/* 4. Header & Navigation */
 header {
-    padding: 30px 5%;
-    background-color: #fffaf0;
-    border-bottom: 2px solid var(--accent-color);
+    padding: 20px 5%;
+    background-color: var(--header-bg);
+    border-bottom: 1px double var(--accent-color);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
 }
 
 nav {
@@ -33,14 +73,15 @@ nav {
 
 .logo {
     font-family: 'Galada', cursive;
-    font-size: 2.5rem;
+    font-size: 2.2rem;
     color: var(--accent-color);
 }
 
 .nav-links {
     display: flex;
-    gap: 25px;
+    gap: 20px;
     list-style: none;
+    align-items: center;
 }
 
 .nav-links a {
@@ -54,6 +95,24 @@ nav {
     color: var(--accent-color);
 }
 
+/* Theme Toggle Button */
+.theme-btn {
+    background: transparent;
+    border: 1px solid var(--accent-color);
+    color: var(--accent-color);
+    padding: 5px 12px;
+    cursor: pointer;
+    border-radius: 50px;
+    font-size: 1.1rem;
+    transition: 0.3s;
+}
+
+.theme-btn:hover {
+    background: var(--accent-color);
+    color: white;
+}
+
+/* 5. Hero & Content */
 .hero {
     text-align: center;
     padding: 80px 20px;
@@ -63,6 +122,7 @@ nav {
     font-size: 3rem;
     color: var(--accent-color);
     margin-bottom: 15px;
+    min-height: 1.2em;
 }
 
 .poetry-container {
@@ -72,41 +132,95 @@ nav {
 }
 
 .poem-card {
-    background: white;
-    padding: 50px;
+    background: var(--card-bg);
+    padding: 40px;
     margin-bottom: 40px;
     border-radius: 4px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    box-shadow: 0 10px 30px var(--shadow);
     border-left: 5px solid var(--accent-color);
-    transition: transform 0.3s ease;
+    border-top: 1px solid var(--border-color);
+    transition: transform 0.3s ease, background-color 0.4s ease;
 }
 
 .poem-card:hover {
-    transform: scale(1.02);
+    transform: translateY(-5px);
 }
 
 .poem-title {
     font-size: 1.8rem;
+    color: var(--accent-color);
     margin-bottom: 5px;
 }
 
 .author {
     font-style: italic;
-    color: #666;
+    color: #888;
     margin-bottom: 20px;
 }
 
 .read-more {
     margin-top: 20px;
-    background: var(--accent-color);
-    color: white;
-    border: none;
+    background: transparent;
+    color: var(--accent-color);
+    border: 1px solid var(--accent-color);
     padding: 8px 20px;
     cursor: pointer;
     font-family: 'Hind Siliguri';
+    transition: 0.3s;
 }
 
-/* Scroll Animation Class */
+.read-more:hover {
+    background: var(--accent-color);
+    color: white;
+}
+
+/* 6. Modal Styling (Fixed for Mobile) */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 10000;
+    left: 0; top: 0; width: 100%; height: 100%;
+    background-color: rgba(0,0,0,0.8);
+    backdrop-filter: blur(8px);
+}
+
+.modal-content {
+    background: var(--modal-bg);
+    margin: 5vh auto;
+    padding: 50px 40px;
+    width: 90%; /* Wide on desktop */
+    max-width: 700px;
+    max-height: 85vh; /* Long in size */
+    overflow-y: auto;
+    position: relative;
+    border-radius: 4px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+    color: var(--text-color);
+}
+
+.close-modal {
+    position: absolute;
+    right: 25px; top: 15px;
+    font-size: 35px; cursor: pointer; color: #888;
+}
+
+.modal-poem-title { 
+    font-family: 'Galada'; 
+    color: var(--accent-color); 
+    text-align: center; 
+    margin-bottom: 10px; 
+}
+
+.separator { border: 0; height: 1px; background: var(--border-color); margin-bottom: 20px; }
+
+.modal-poem-body { 
+    white-space: pre-line; 
+    text-align: center; 
+    font-size: 1.2rem; 
+    line-height: 2;
+}
+
+/* 7. Animations & Footer */
 .scroll-reveal {
     opacity: 0;
     transform: translateY(30px);
@@ -118,112 +232,35 @@ nav {
     transform: translateY(0);
 }
 
-/* Responsive */
+footer {
+    padding: 40px 20px;
+    border-top: 1px solid var(--border-color);
+}
+
+/* 8. Responsive Adjustments */
 @media (max-width: 600px) {
-    .nav-links { display: none; }
-    .hero h1 { font-size: 2rem; }
-    .poem-card { padding: 25px; }
+    .nav-links li:not(:last-child) { display: none; } /* Only keep theme button on mobile nav */
+    .hero h1 { font-size: 2.2rem; }
+    .poem-card { padding: 30px 20px; }
+    
+    /* Making Modal quite wide and long for mobile */
+    .modal-content {
+        width: 95%; 
+        margin: 2vh auto;
+        padding: 40px 20px;
+        max-height: 96vh;
+    }
+    
+    /* Inside your style.css */
+    .modal-poem-body { 
+    white-space: pre-line; 
+    text-align: center; 
+    
+    /* CHANGE THIS VALUE */
+    font-size: 1rem; 
+    
+    line-height: 1.7; /* Adjust this for line spacing */
+    font-weight: 400; /* Use 500 or 700 for bolder text */
+    }
+
 }
-:root {
-    --bg-color: #f4f1ea;
-    --accent-color: #5d1919;
-    --text-color: #2d2d2d;
-}
-
-* { margin: 0; padding: 0; box-sizing: border-box; }
-
-body {
-    font-family: 'Hind Siliguri', sans-serif;
-    background-color: var(--bg-color);
-    color: var(--text-color);
-    overflow-x: hidden;
-}
-
-/* Paper Texture Overlay */
-.paper-texture {
-    position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background-image: url('https://www.transparenttextures.com/patterns/handmade-paper.png');
-    pointer-events: none;
-    z-index: 9999;
-    opacity: 0.4;
-}
-
-header {
-    padding: 20px 5%;
-    border-bottom: 1px double var(--accent-color);
-    background: rgba(255, 255, 255, 0.5);
-}
-
-nav { display: flex; justify-content: space-between; align-items: center; max-width: 1000px; margin: 0 auto; }
-.logo { font-family: 'Galada', cursive; font-size: 2.2rem; color: var(--accent-color); }
-.nav-links { display: flex; gap: 20px; list-style: none; }
-.nav-links a { text-decoration: none; color: var(--text-color); font-weight: 500; }
-
-.hero { text-align: center; padding: 60px 20px; }
-.hero h1 { font-size: 2.8rem; color: var(--accent-color); min-height: 1.2em; }
-
-.poetry-container { max-width: 800px; margin: 0 auto; padding: 20px; }
-
-.poem-card {
-    background: rgba(255, 255, 255, 0.8);
-    padding: 30px;
-    margin-bottom: 30px;
-    border: 1px solid #dcd7c9;
-    box-shadow: 5px 5px 15px rgba(0,0,0,0.03);
-    transition: 0.3s;
-}
-
-.poem-card:hover { transform: translateY(-5px); border-color: var(--accent-color); }
-.poem-title { font-size: 1.6rem; color: var(--accent-color); }
-.author { font-style: italic; color: #777; margin-bottom: 15px; }
-
-.read-more {
-    background: transparent;
-    border: 1px solid var(--accent-color);
-    color: var(--accent-color);
-    padding: 8px 18px;
-    cursor: pointer;
-    font-family: 'Hind Siliguri';
-    margin-top: 15px;
-    transition: 0.3s;
-}
-
-.read-more:hover { background: var(--accent-color); color: white; }
-
-/* Modal Styling */
-.modal {
-    display: none;
-    position: fixed;
-    z-index: 10000;
-    left: 0; top: 0; width: 100%; height: 100%;
-    background-color: rgba(0,0,0,0.7);
-    backdrop-filter: blur(5px);
-}
-
-.modal-content {
-    background: #fffdf9;
-    margin: 5% auto;
-    padding: 40px;
-    width: 80%;
-    max-width: 600px;
-    max-height: 80vh;
-    overflow-y: auto;
-    position: relative;
-    border-radius: 2px;
-    box-shadow: 0 20px 50px rgba(0,0,0,0.3);
-}
-
-.close-modal {
-    position: absolute;
-    right: 20px; top: 10px;
-    font-size: 30px; cursor: pointer; color: #aaa;
-}
-
-.modal-poem-title { font-family: 'Galada'; color: var(--accent-color); text-align: center; margin-bottom: 10px; }
-.separator { border: 0; height: 1px; background: #ddd; margin-bottom: 20px; }
-.modal-poem-body { white-space: pre-line; text-align: center; font-size: 1.1rem; }
-
-/* Animation Classes */
-.scroll-reveal { opacity: 0; transform: translateY(20px); transition: 0.6s ease-out; }
-.scroll-reveal.active { opacity: 1; transform: translateY(0); }
