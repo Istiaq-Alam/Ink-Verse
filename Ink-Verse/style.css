@@ -44,6 +44,23 @@ body {
     transition: background-color 0.4s ease, color 0.4s ease;
 }
 
+.logo {
+    font-family: 'Galada', cursive;
+    font-size: 2.2rem;
+    color: var(--accent-color);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    /* Space between lotus and text */
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.logo:hover {
+    filter: drop-shadow(0 0 8px var(--accent-color));
+    transform: translateY(-2px);
+}
+
 /* Paper Texture Overlay */
 .paper-texture {
     position: fixed;
