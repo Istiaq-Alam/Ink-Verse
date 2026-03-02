@@ -316,3 +316,72 @@ footer {
         line-height: 1.7;
     }
 }
+
+/* --- Author Section Styling --- */
+.author-section {
+    max-width: 800px;
+    margin: 80px auto;
+    padding: 40px;
+    background: var(--card-bg);
+    border-top: 3px solid var(--accent-color);
+    border-radius: 12px;
+    box-shadow: 0 10px 30px var(--shadow);
+}
+
+.author-container {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+.author-image img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid var(--accent-color);
+    padding: 5px;
+    background: var(--bg-color);
+}
+
+.author-info h3 {
+    font-family: 'Galada', cursive;
+    font-size: 2rem;
+    color: var(--accent-color);
+    margin-bottom: 10px;
+}
+
+.author-bio {
+    font-size: 1.1rem;
+    color: var(--text-color);
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.social-links a {
+    text-decoration: none;
+    color: var(--accent-color);
+    font-weight: bold;
+    margin-right: 15px;
+    font-size: 0.9rem;
+    border-bottom: 1px dashed var(--accent-color);
+    transition: 0.3s;
+}
+
+.social-links a:hover {
+    color: var(--text-color);
+    border-bottom: 1px solid var(--text-color);
+}
+
+/* --- Mobile Responsive for Author --- */
+@media (max-width: 600px) {
+    .author-container {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .author-image img {
+        width: 120px;
+        height: 120px;
+    }
+}
