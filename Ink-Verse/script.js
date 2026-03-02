@@ -12,14 +12,31 @@ const typewriter = () => {
 };
 
 // 2. Scroll Reveal
+// Enhanced Scroll Reveal with Staggered Delay
 const reveal = () => {
     const reveals = document.querySelectorAll(".scroll-reveal");
-    reveals.forEach(el => {
+    
+    reveals.forEach((el, index) => {
         const windowHeight = window.innerHeight;
         const elementTop = el.getBoundingClientRect().top;
-        if (elementTop < windowHeight - 100) { el.classList.add("active"); }
+        const elementVisible = 100;
+        
+        if (elementTop < windowHeight - elementVisible) {
+            // Adds a small delay based on the index if they are visible at once
+            setTimeout(() => {
+                el.classList.add("active");
+            }, index * 100); 
+        }
     });
 };
+
+// Add a 'loaded' class to body for footer animation
+window.onload = () => {
+    document.body.classList.add('loaded');
+    typewriter();
+    reveal();
+};
+
 
 // 3. Modal & Fetch Logic
 const modal = document.getElementById("poemModal");

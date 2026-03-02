@@ -8,6 +8,9 @@
     --modal-bg: #fffdf9;
     --border-color: #dcd7c9;
     --shadow: rgba(0, 0, 0, 0.05);
+    
+    /* Light Mode Shine: Pearly glow */
+    --shine-color: rgba(255, 255, 255, 0.9); 
 }
 
 /* 2. Dark Mode Variables */
@@ -15,11 +18,14 @@
     --bg-color: #1a1a1a;       /* Dark Charcoal */
     --header-bg: rgba(34, 34, 34, 0.9);
     --card-bg: #262626;
-    --accent-color: #e0a38d;   /* Soft Copper for better dark reading */
+    --accent-color: #e0a38d;   /* Soft Copper */
     --text-color: #e0e0e0;
     --modal-bg: #1e1e1e;
     --border-color: #444;
     --shadow: rgba(0, 0, 0, 0.4);
+    
+    /* Dark Mode Shine: Crisp white highlight */
+    --shine-color: rgba(255, 255, 255, 0.2);
 }
 
 /* 3. General Reset & Base Styles */
@@ -131,19 +137,67 @@ nav {
     padding: 20px;
 }
 
+/* --- High-End Poem Card Styling --- */
 .poem-card {
     background: var(--card-bg);
+    backdrop-filter: blur(10px);
     padding: 40px;
-    margin-bottom: 40px;
-    border-radius: 4px;
-    box-shadow: 0 10px 30px var(--shadow);
-    border-left: 5px solid var(--accent-color);
-    border-top: 1px solid var(--border-color);
-    transition: transform 0.3s ease, background-color 0.4s ease;
+    margin-bottom: 50px;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-left: 6px solid var(--accent-color);
+    box-shadow: 0 10px 20px var(--shadow);
+    position: relative;
+    overflow: hidden;
+    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* Enhanced Shine Animation */
+.poem-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -150%;
+    width: 60%;
+    height: 100%;
+    background: linear-gradient(
+        to right, 
+        transparent, 
+        var(--shine-color), 
+        transparent
+    );
+    transform: skewX(-25deg);
+    transition: 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 1;
+}
+
+.poem-card:hover::before {
+    left: 150%;
 }
 
 .poem-card:hover {
-    transform: translateY(-5px);
+    transform: translateY(-12px) scale(1.02);
+    box-shadow: 0 20px 40px var(--shadow);
+    border-left-width: 10px;
+}
+
+/* Keep text above the shine */
+.poem-title, .author, .excerpt, .read-more {
+    position: relative;
+    z-index: 2;
+}
+
+/* --- Advanced Scroll Reveal Animation --- */
+.scroll-reveal {
+    opacity: 0;
+    transform: translateY(50px) rotateX(-10deg);
+    transition: opacity 1s ease-out, transform 0.8s cubic-bezier(0.2, 1, 0.3, 1);
+    will-change: transform, opacity;
+}
+
+.scroll-reveal.active {
+    opacity: 1;
+    transform: translateY(0) rotateX(0);
 }
 
 .poem-title {
@@ -174,7 +228,7 @@ nav {
     color: white;
 }
 
-/* 6. Modal Styling (Fixed for Mobile) */
+/* 6. Modal Styling */
 .modal {
     display: none;
     position: fixed;
@@ -188,9 +242,9 @@ nav {
     background: var(--modal-bg);
     margin: 5vh auto;
     padding: 50px 40px;
-    width: 90%; /* Wide on desktop */
+    width: 90%; 
     max-width: 700px;
-    max-height: 85vh; /* Long in size */
+    max-height: 85vh;
     overflow-y: auto;
     position: relative;
     border-radius: 4px;
@@ -216,34 +270,23 @@ nav {
 .modal-poem-body { 
     white-space: pre-line; 
     text-align: center; 
-    font-size: 1.2rem; 
+    font-size: 1.25rem; /* Slightly larger for better reading */
     line-height: 2;
 }
 
-/* 7. Animations & Footer */
-.scroll-reveal {
-    opacity: 0;
-    transform: translateY(30px);
-    transition: all 0.8s ease-out;
-}
-
-.scroll-reveal.active {
-    opacity: 1;
-    transform: translateY(0);
-}
-
+/* 7. Footer */
 footer {
     padding: 40px 20px;
     border-top: 1px solid var(--border-color);
+    text-align: center;
 }
 
 /* 8. Responsive Adjustments */
 @media (max-width: 600px) {
-    .nav-links li:not(:last-child) { display: none; } /* Only keep theme button on mobile nav */
+    .nav-links li:not(:last-child) { display: none; }
     .hero h1 { font-size: 2.2rem; }
     .poem-card { padding: 30px 20px; }
     
-    /* Making Modal quite wide and long for mobile */
     .modal-content {
         width: 95%; 
         margin: 2vh auto;
@@ -251,16 +294,8 @@ footer {
         max-height: 96vh;
     }
     
-    /* Inside your style.css */
     .modal-poem-body { 
-    white-space: pre-line; 
-    text-align: center; 
-    
-    /* CHANGE THIS VALUE */
-    font-size: 1rem; 
-    
-    line-height: 1.7; /* Adjust this for line spacing */
-    font-weight: 400; /* Use 500 or 700 for bolder text */
+        font-size: 1rem; 
+        line-height: 1.7;
     }
-
 }
