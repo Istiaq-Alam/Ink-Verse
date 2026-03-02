@@ -402,3 +402,49 @@ footer {
         /* Justify can sometimes look weird on very narrow screens */
     }
 }
+
+/* Prose Specific Body Styles */
+.modal-poem-body.type-prose {
+    text-align: justify;
+    padding: 0 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+/* 6. Pagination UI */
+.pagination {
+    display: none;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 1px dashed var(--border-color);
+}
+
+.page-btn {
+    background: var(--accent-color);
+    color: white;
+    border: none;
+    padding: 8px 18px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: 'Hind Siliguri';
+}
+
+.page-btn:disabled { background: #ccc; cursor: not-allowed; }
+#pageNumber { font-weight: bold; color: var(--accent-color); }
+
+/* Page Turning Effects */
+.page-turn-right { animation: slideInRight 0.4s forwards; }
+.page-turn-left { animation: slideInLeft 0.4s forwards; }
+
+@keyframes slideInRight {
+    from { opacity: 0; transform: translateX(30px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes slideInLeft {
+    from { opacity: 0; transform: translateX(-30px); }
+    to { opacity: 1; transform: translateX(0); }
+}
