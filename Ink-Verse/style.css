@@ -208,7 +208,7 @@ nav {
 .scroll-reveal {
     opacity: 0;
     transform: translateY(50px) rotateX(-10deg);
-    transition: opacity 1s ease-out, transform 0.8s cubic-bezier(0.2, 1, 0.3, 1);
+    transition: opacity 0.5s ease-out, transform 0.8s cubic-bezier(0.2, 1, 0.3, 1);
     will-change: transform, opacity;
 }
 
@@ -447,4 +447,26 @@ footer {
 @keyframes slideInLeft {
     from { opacity: 0; transform: translateX(-30px); }
     to { opacity: 1; transform: translateX(0); }
+}
+
+.timestamp {
+    font-size: 0.9rem;
+    color: var(--text-color);
+    opacity: 0.7;
+    /* Makes it look subtle */
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+/* Optional: Add a small clock icon before the date using CSS */
+.timestamp::before {
+    content: "🕒";
+    font-size: 0.8rem;
+}
+
+[data-theme="dark"] .timestamp {
+    color: var(--accent-color);
+    opacity: 0.9;
 }
