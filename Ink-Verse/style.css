@@ -385,3 +385,20 @@ footer {
         height: 120px;
     }
 }
+
+
+/* Class for Prose (Justified) */
+.modal-poem-body.type-prose {
+    text-align: justify;
+    hyphens: auto;
+    padding: 0 10px;
+}
+
+/* Mobile tweak for prose */
+@media (max-width: 600px) {
+    .modal-poem-body.type-prose {
+        font-size: 1rem;
+        text-align: left;
+        /* Justify can sometimes look weird on very narrow screens */
+    }
+}

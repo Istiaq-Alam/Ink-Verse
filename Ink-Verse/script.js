@@ -96,6 +96,33 @@ themeToggle.addEventListener('click', () => {
     }
 });
 
+document.querySelectorAll(".read-more").forEach(button => {
+    button.addEventListener("click", async () => {
+        const filePath = button.getAttribute("data-file");
+        const title = button.getAttribute("data-title");
+        const contentType = button.getAttribute("data-type") || "poem"; // Defaults to poem
+        
+        modalTitle.innerText = "লোডিং...";
+        modalBody.innerText = "";
+        modal.style.display = "block";
+
+        // Remove old classes and add the new one based on data-type
+        modalBody.classList.remove("type-poem", "type-prose");
+        modalBody.classList.add(`type-${contentType}`);
+
+        try {
+            const response = await fetch(filePath);
+            if (!response.ok) throw new Error("ফাইল পাওয়া যায়নি");
+            const text = await response.text();
+            
+            modalTitle.innerText = title;
+            modalBody.innerText = text;
+        } catch (error) {
+            modalBody.innerText = "দুঃখিত, লেখাটি লোড করা সম্ভব হয়নি।";
+        }
+    });
+});
+
 
 // Init
 window.addEventListener("scroll", reveal);
