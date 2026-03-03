@@ -288,7 +288,7 @@ nav {
     white-space: pre-line; 
     text-align: center; 
     font-size: 1.25rem; /* Slightly larger for better reading */
-    line-height: 2;
+    line-height: 2; /*Line hight for better line spacing*/
 }
 
 /* 7. Footer */
